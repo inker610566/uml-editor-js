@@ -74,16 +74,17 @@ function NewUMLEditor()
             ClickButton.call(this, "ChangeAddLineButton");
         };
     };
-    function NewSelectNode(uml_editor_model)
+    // @param model UMLEditorModel
+    function NewSelectNode(model)
     {
         var np = document.createElement('input');
         np.type = 'button';
         np.value = 'Select';
         np.onclick = function()
         {
-            uml_editor_model.ClickSelectButton();
+            model.ClickSelectButton();
         };
-        uml_editor_model.UIReflectors.ChangeButtonState
+        model.UIReflectors.ChangeButtonState
             .ChangeSelectButton = function(active)
         {
             np.style.color = active?'black':'gray';
@@ -91,16 +92,17 @@ function NewUMLEditor()
         };
         return np;
     }
-    function NewAddClassNode()
+    // @param model UMLEditorModel
+    function NewAddClassNode(model)
     {
         var np = document.createElement('input');
         np.type = 'button';
         np.value = 'Add Class';
         np.onclick = function()
         {
-            uml_editor_model.ClickAddClassButton();
+            model.ClickAddClassButton();
         };
-        uml_editor_model.UIReflectors.ChangeButtonState
+        model.UIReflectors.ChangeButtonState
             .ChangeAddClassButton = function(active)
         {
             np.style.color = active?'black':'gray';
@@ -108,16 +110,17 @@ function NewUMLEditor()
         };
         return np;
     }
-    function NewAddLineNode()
+    // @param model UMLEditorModel
+    function NewAddLineNode(model)
     {
         var np = document.createElement('input');
         np.type = 'button';
         np.value = 'Add Line';
         np.onclick = function()
         {
-            uml_editor_model.ClickAddLineButton();
+            model.ClickAddLineButton();
         };
-        uml_editor_model.UIReflectors.ChangeButtonState
+        model.UIReflectors.ChangeButtonState
             .ChangeAddLineButton = function(active)
         {
             np.style.color = active?'black':'gray';
