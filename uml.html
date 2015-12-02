@@ -41,6 +41,7 @@ function NewUMLEditor()
                     this.ButtonUpdaters[key](false);
             this.ButtonUpdaters[id](true);
         };
+        // @param   which ClassModel is clicked
         this.MouseDownClass = function(_class)
         {
         };
@@ -128,9 +129,18 @@ function NewUMLEditor()
         };
         return np;
     }
+    // @param model UMLEditorModel
+    function NewCanvasNode(model)
+    {
+        var div = document.createElement('div');
+        div.style.background = 'pink';
+        div.style.width  = 500;
+        div.style.height = 500;
+        return div;
+    }
     var uml_editor_model = new UMLEditorModel();
     return [
-        null,
+        NewCanvasNode(uml_editor_model),
         NewSelectNode(uml_editor_model),
         NewAddClassNode(uml_editor_model),
         NewAddLineNode(uml_editor_model)
@@ -144,6 +154,7 @@ bdy.onload = function()
     bdy.appendChild(Nodes[1]);
     bdy.appendChild(Nodes[2]);
     bdy.appendChild(Nodes[3]);
+    bdy.appendChild(Nodes[0]);
 };
 </script>
 </html>
