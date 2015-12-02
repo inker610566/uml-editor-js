@@ -19,6 +19,7 @@ var View = {
     },
     CreateCanvasNode: function(){
         var div = document.createElement('div');
+        div.style.position = 'relative';
         div.style.background = 'pink';
         div.style.width  = 500;
         div.style.height = 500;
@@ -33,5 +34,18 @@ var View = {
         button.style.color = 'gray';
         button.style.fontWeight = 'normal';
         return button;
+    },
+    CreateClassNode: function(x, y, z_index)
+    {
+        var div = document.createElement('div');
+        div.style.background = 'white';
+        div.style.width  = 50;
+        div.style.height = 50;
+        div.style.border = "1px solid black";
+        div.style.position = 'absolute';
+        div.style.zIndex = z_index||1;
+        div.style.left = x;
+        div.style.top = y;
+        return div;
     }
 };

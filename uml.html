@@ -1,6 +1,9 @@
 <html>
 
 <head>
+<script type='text/javascript' src="js/ClassObject.js"></script>
+<script type='text/javascript' src="js/AddClassMode.js"></script>
+<script type='text/javascript' src="js/DefaultMode.js"></script>
 <script type='text/javascript' src="js/view.js"></script>
 <script type='text/javascript' src="js/UMLEditorModel.js"></script>
 </head>
@@ -59,15 +62,26 @@ function NewAddLineNode(model)
 }
 function NewCanvasNode(model)
 {
-    return View.CreateCanvasNode();
+    var np = View.CreateCanvasNode();
+    np.onmousedown = function(e)
+    {
+        model.MouseDownCanvas(e.offsetX, e.offsetY);
+    };
+    return np;
 }
 bdy.onload = function()
 {
     var model = new UMLEditorModel();
+    var canvas = NewCanvasNode(model);
+    model.Events.OnNewClass = function(_class, x, y)
+    {
+        var class_node = View.CreateClassNode(x, y);
+        canvas.appendChild(class_node);
+    };
     bdy.appendChild(NewSelectNode(model));
     bdy.appendChild(NewAddClassNode(model));
     bdy.appendChild(NewAddLineNode(model));
-    bdy.appendChild(NewCanvasNode(model));
+    bdy.appendChild(canvas);
 };
 
 </script>

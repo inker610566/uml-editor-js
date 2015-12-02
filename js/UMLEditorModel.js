@@ -2,7 +2,6 @@ var UMLEditorModel = function(
     OnNewClass
 )
 {
-    var that = this;
     var do_nothing = function(){};
     // Model call these to do changes in UI
     this.UIReflectors = {
@@ -12,6 +11,14 @@ var UMLEditorModel = function(
             ChangeAddLineButton: do_nothing
         }
     };
+    // Register Event to catch model change
+    this.Events = {
+        OnNewClass: do_nothing // (ClassModel, x, y)->()
+    };
+
+    var _addClassMode = new AddClassMode(this);
+    var _currentMode = new DefaultMode(this);
+
     function ClickButton(id)
     {
         for(var key in Button)
@@ -20,18 +27,32 @@ var UMLEditorModel = function(
         this.ButtonUpdaters[id](true);
     };
     // @param   which ClassModel is clicked
-    this.MouseDownClass = function(_class)
+    this.MouseDownClass = function(_class, x, y)
     {
+        _currentMode.MouseDownCanvas(_class, x, y);
     };
-    this.MouseUpClass = function()
+    this.MouseUpClass = function(_class, x, y)
     {
+        _currentMode.MouseUpClass(_class, x, y);
     };
-    this.MouseMove = function()
+    this.MouseMove = function(x, y)
     {
+        _currentMode.MouseMove(x, y);
     };
-    this.MouseLeave = function()
+    this.MouseLeaveCanvas = function(x, y)
     {
+        _currentMode.MouseLeaveCanvas(x, y);
     };
+    this.MouseDownCanvas = function(x, y)
+    {
+        _currentMode.MouseDownCanvas(x, y);
+    };
+    this.MouseUpCanvas = function(x, y)
+    {
+        _currentMode.MouseUpCanvas(x, y);
+    };
+
+    // Toolbox
     var ClickButton = function(rname)
     {
         var cbs = this.UIReflectors.ChangeButtonState;
@@ -47,6 +68,7 @@ var UMLEditorModel = function(
     this.ClickAddClassButton = function()
     {
         ClickButton.call(this, "ChangeAddClassButton");
+        _currentMode = _addClassMode;
     };
     this.ClickAddLineButton = function()
     {
