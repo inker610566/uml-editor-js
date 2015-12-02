@@ -1,6 +1,4 @@
-var UMLEditorModel = function(
-    OnNewClass
-)
+var UMLEditorModel = function()
 {
     var do_nothing = function(){};
     // Model call these to do changes in UI
@@ -29,7 +27,7 @@ var UMLEditorModel = function(
     // @param   which ClassModel is clicked
     this.MouseDownClass = function(_class, x, y)
     {
-        _currentMode.MouseDownCanvas(_class, x, y);
+        _currentMode.MouseDownClass(_class, x, y);
     };
     this.MouseUpClass = function(_class, x, y)
     {

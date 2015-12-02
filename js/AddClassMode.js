@@ -6,6 +6,9 @@ var AddClassMode = function(model)
     };
     this.MouseUpClass = function(_class, x, y)
     {
+        x += _class.x;
+        y += _class.y;
+        model.Events.OnNewClass(new ClassObject(x, y));
     };
     this.MouseMove = function(x, y)
     {
@@ -15,7 +18,7 @@ var AddClassMode = function(model)
     };
     this.MouseDownCanvas = function(x, y)
     {
-        model.Events.OnNewClass(new ClassObject(), x, y);
+        model.Events.OnNewClass(new ClassObject(x, y));
     };
     this.MouseUpCanvas = function(x, y)
     {

@@ -65,6 +65,7 @@ function NewCanvasNode(model)
     var np = View.CreateCanvasNode();
     np.onmousedown = function(e)
     {
+        console.log("Canvas");
         model.MouseDownCanvas(e.offsetX, e.offsetY);
     };
     return np;
@@ -73,9 +74,20 @@ bdy.onload = function()
 {
     var model = new UMLEditorModel();
     var canvas = NewCanvasNode(model);
-    model.Events.OnNewClass = function(_class, x, y)
+    model.Events.OnNewClass = function(_class)
     {
-        var class_node = View.CreateClassNode(x, y);
+        var class_node = View.CreateClassNode(
+            _class.x, _class.y, ++ClassObject.g_zIndex);
+        class_node.onmousedown = function(e)
+        {
+            model.MouseDownClass(_class, e.offsetX, e.offsetY);
+            e.stopPropagation();
+        };
+        class_node.onmouseup = function(e)
+        {
+            model.MouseUpClass(_class, e.offsetX, e.offsetY);
+            e.stopPropagation();
+        };
         canvas.appendChild(class_node);
     };
     bdy.appendChild(NewSelectNode(model));

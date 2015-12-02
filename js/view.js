@@ -23,6 +23,7 @@ var View = {
         div.style.background = 'pink';
         div.style.width  = 500;
         div.style.height = 500;
+        div.style.overflow = 'hidden';
         return div;
     },
     ActiveButton: function(button){
