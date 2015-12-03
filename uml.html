@@ -2,8 +2,9 @@
 
 <head>
 <script type='text/javascript' src="js/ClassObject.js"></script>
-<script type='text/javascript' src="js/AddClassMode.js"></script>
 <script type='text/javascript' src="js/DefaultMode.js"></script>
+<script type='text/javascript' src="js/SelectMode.js"></script>
+<script type='text/javascript' src="js/AddClassMode.js"></script>
 <script type='text/javascript' src="js/view.js"></script>
 <script type='text/javascript' src="js/UMLEditorModel.js"></script>
 </head>
@@ -65,7 +66,6 @@ function NewCanvasNode(model)
     var np = View.CreateCanvasNode();
     np.onmousedown = function(e)
     {
-        console.log("Canvas");
         model.MouseDownCanvas(e.offsetX, e.offsetY);
     };
     return np;
@@ -77,7 +77,13 @@ bdy.onload = function()
     model.Events.OnNewClass = function(_class)
     {
         var class_node = View.CreateClassNode(
-            _class.x, _class.y, ++ClassObject.g_zIndex);
+            _class.x, _class.y);
+        // Model notify View
+        _class.UIReflectors.FocusIt = function()
+        {
+            View.FocusObjectNode(class_node);
+        };
+        // View notify Model
         class_node.onmousedown = function(e)
         {
             model.MouseDownClass(_class, e.offsetX, e.offsetY);

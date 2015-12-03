@@ -1,4 +1,6 @@
 var View = {
+    // only need to track current max number
+    g_zIndex: 2, 
     CreateSelectNode: function(){
         var np = document.createElement('input');
         np.type = 'button';
@@ -44,9 +46,14 @@ var View = {
         div.style.height = 50;
         div.style.border = "1px solid black";
         div.style.position = 'absolute';
-        div.style.zIndex = z_index||1;
+        div.style.zIndex = ++View.g_zIndex;
         div.style.left = x;
         div.style.top = y;
         return div;
+    },
+    FocusObjectNode: function(div)
+    {
+        div.style.zIndex = ++View.g_zIndex;
     }
 };
+

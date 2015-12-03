@@ -14,7 +14,8 @@ var UMLEditorModel = function()
         OnNewClass: do_nothing // (ClassModel, x, y)->()
     };
 
-    var _addClassMode = new AddClassMode(this);
+    var _addClassMode = new AddClassMode(this),
+        _selectMode = new SelectMode(this);
     var _currentMode = new DefaultMode(this);
 
     function ClickButton(id)
@@ -62,6 +63,7 @@ var UMLEditorModel = function()
     this.ClickSelectButton = function()
     {
         ClickButton.call(this, "ChangeSelectButton");
+        _currentMode = _selectMode;
     };
     this.ClickAddClassButton = function()
     {
