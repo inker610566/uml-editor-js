@@ -26,4 +26,10 @@ var AddClassMode = function(model)
     {
         model.Events.OnNewClass(new ClassObject(x, y));
     };
+    this.EnterMode = function()
+    {
+    };
+    this.LeaveMode = function()
+    {
+    };
 };

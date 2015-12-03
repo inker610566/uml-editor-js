@@ -17,6 +17,16 @@ var UMLEditorModel = function()
     var _addClassMode = new AddClassMode(this),
         _selectMode = new SelectMode(this);
     var _currentMode = new DefaultMode(this);
+    // Mode
+    function EnterMode(mode)
+    {
+        if(mode != _currentMode)
+        {
+            _currentMode.LeaveMode();
+            mode.EnterMode();
+            _currentMode = mode;
+        }
+    }
 
     function ClickButton(id)
     {
@@ -67,12 +77,12 @@ var UMLEditorModel = function()
     this.ClickSelectButton = function()
     {
         ClickButton.call(this, "ChangeSelectButton");
-        _currentMode = _selectMode;
+        EnterMode(_selectMode);
     };
     this.ClickAddClassButton = function()
     {
         ClickButton.call(this, "ChangeAddClassButton");
-        _currentMode = _addClassMode;
+        EnterMode(_addClassMode);
     };
     this.ClickAddLineButton = function()
     {

@@ -88,12 +88,16 @@ bdy.onload = function()
     var canvas = NewCanvasNode(model);
     model.Events.OnNewClass = function(_class)
     {
-        var class_node = View.CreateClassNode(
+        var class_node = View.ClassNode.Create(
             _class.x, _class.y);
         // Model notify View
-        _class.UIReflectors.FocusIt = function()
+        _class.UIReflectors.Focus = function()
         {
-            View.FocusObjectNode(class_node);
+            View.ClassNode.Focus(class_node);
+        };
+        _class.UIReflectors.UnFocus = function()
+        {
+            View.ClassNode.UnFocus(class_node);
         };
         _class.UIReflectors.ChangeXY = function(x, y)
         {
@@ -121,6 +125,13 @@ bdy.onload = function()
     bdy.appendChild(NewAddClassNode(model));
     bdy.appendChild(NewAddLineNode(model));
     bdy.appendChild(canvas);
+    /*
+    var test = View.ClassNode.Create(100, 100);
+    console.log(test);
+    canvas.appendChild(test);
+    View.ClassNode.Focus(test);
+    */
+
 };
 
 </script>

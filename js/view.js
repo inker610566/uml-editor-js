@@ -39,18 +39,93 @@ var View = {
         button.style.fontWeight = 'normal';
         return button;
     },
+    ClassNode: {
+        Create: function(x, y)
+        {
+            var w = 50, h = 50;
+            var div = document.createElement('div');
+            // div.style.background = 'white';
+            div.style.width = w;
+            div.style.height = h;
+            div.style.border = "1px solid black";
+            div.style.position = 'absolute';
+            div.style.left = x;
+            div.style.top = y;
+            div.style.zIndex = ++View.g_zIndex;
+            var wrapper = document.createElement('div');
+            wrapper.className = 'wrapper';
+            wrapper.style.position = 'relative';
+            wrapper.style.width = w;
+            wrapper.style.height = h;
+            div.appendChild(wrapper);
+
+            var canvas = document.createElement('canvas');
+            canvas.width  = w;
+            canvas.height = h;
+            View.ClassNode.FillBackground(canvas);
+            wrapper.appendChild(canvas);
+
+            return div;
+        },
+        Focus: function(div)
+        {
+            var w = parseInt(div.style.width),
+                h = parseInt(div.style.height);
+            var pw = 10, ph = 10;
+            View.FocusObjectNode(div);
+            var can = div.getElementsByTagName('canvas')[0];
+            View.ClassNode.DrawCross(can);
+            var pxs = [(w-pw)/2,    -pw/2, (w-pw)/2, w-(pw/2)];
+            var pys = [   -ph/2, (h-ph)/2, h-(ph/2), (h-ph)/2];
+            
+            for(var i = 0 ; i < pxs.length ; i ++)
+                div.getElementsByClassName('wrapper')[0]
+                    .appendChild(View.CreatePortNode(pxs[i], pys[i]));
+        },
+        UnFocus: function(div)
+        {
+            var w = parseInt(div.style.width),
+                h = parseInt(div.style.height);
+            var pw = 10, ph = 10;
+            var can = div.getElementsByTagName('canvas')[0];
+            View.ClassNode.FillBackground(can);
+            var ports = div.getElementsByClassName('port');
+            while(ports.length)
+                ports[0].remove();
+        },
+        FillBackground: function(canvas)
+        {
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = "#FFFFFF";
+            ctx.rect(0,0,canvas.width, canvas.height);
+            ctx.fill();
+        },
+        DrawCross: function(canvas)
+        {
+            var ctx = canvas.getContext("2d");
+            // draw
+            function DrawLine(x1, y1, x2, y2)
+            {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            DrawLine(0, 0, canvas.width, canvas.height);
+            DrawLine(0, canvas.width, canvas.height, 0);
+        }
+    },
     /*** Object Node ***/
-    CreateClassNode: function(x, y, z_index)
+    CreatePortNode: function(x, y)
     {
         var div = document.createElement('div');
-        div.style.background = 'white';
-        div.style.width  = 50;
-        div.style.height = 50;
-        div.style.border = "1px solid black";
+        div.className = 'port';
+        div.style.background = 'black';
+        div.style.width  = 10;
+        div.style.height = 10;
         div.style.position = 'absolute';
-        div.style.zIndex = ++View.g_zIndex;
         div.style.left = x;
-        div.style.top = y;
+        div.style.top  = y;
         return div;
     },
     FocusObjectNode: function(div)

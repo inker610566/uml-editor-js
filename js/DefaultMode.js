@@ -22,4 +22,10 @@ var DefaultMode = function()
     this.MouseUpCanvas = function(x, y)
     {
     };
+    this.EnterMode = function()
+    {
+    };
+    this.LeaveMode = function()
+    {
+    };
 };

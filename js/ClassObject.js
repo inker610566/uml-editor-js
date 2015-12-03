@@ -5,6 +5,7 @@ var ClassObject = function(sx, sy)
     var do_nothing = function(){};
     this.UIReflectors = {
         ChangeXY: do_nothing, // (x, y) -> ()
-        FocusIt: do_nothing
+        Focus: do_nothing,
+        UnFocus: do_nothing
     }
 };
