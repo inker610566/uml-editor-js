@@ -39,6 +39,7 @@ var View = {
         button.style.fontWeight = 'normal';
         return button;
     },
+    /*** Object Node ***/
     ClassNode: {
         Create: function(x, y)
         {
@@ -115,7 +116,26 @@ var View = {
             DrawLine(0, canvas.width, canvas.height, 0);
         }
     },
-    /*** Object Node ***/
+    LineNode: {
+        Create: function(x1, y1, x2, y2)
+        {
+            var div = document.createElement('div');
+            div.style.background = '#666';
+            div.style.boxShadow = '0 0 20px #444';
+            div.style.zIndex = ++View.g_zIndex;
+            var len = Math.hypot(x2-x1, y2-y1)
+            div.style.width  = len;
+            div.style.height = 1;
+            div.style.position = 'absolute';
+            div.style.left = x1;
+            div.style.top  = y1;
+            div.style.transformOrigin = '0 50%';
+            var deg = Math.acos((x2-x1)/len);
+            if(y2<y1) deg = -deg;
+            div.style.transform = "rotate("+deg+"rad)";
+            return div;
+        }
+    },
     CreatePortNode: function(x, y)
     {
         var div = document.createElement('div');
@@ -137,23 +157,20 @@ var View = {
         div.style.left = x;
         div.style.top  = y;
     },
-    /*** Line Node ***/
-    CreateLineNode: function(x1, y1, x2, y2)
+    ChangeLineNodeXY: function(div, endpoints)
     {
-        var div = document.createElement('div');
-        div.style.background = 'black';
-        var len = Math.hypot(x2-x1, y2-y1)
-        div.style.width  = len;
-        div.style.height = 2;
-        div.style.position = 'absolute';
+        var x1 = endpoints[0][0],
+            y1 = endpoints[0][1],
+            x2 = endpoints[1][0],
+            y2 = endpoints[1][1];
+
         div.style.left = x1;
         div.style.top  = y1;
-        div.style.transformOrigin = '0 50%';
+        var len = Math.hypot(x2-x1, y2-y1);
+        div.style.width  = len;
         var deg = Math.acos((x2-x1)/len);
         if(y2<y1) deg = -deg;
-        deg = deg*180/Math.PI;
-        div.style.transform = "rotate("+deg+"deg)";
-        return div;
+        div.style.transform = "rotate("+deg+"rad)";
     }
 };
 

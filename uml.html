@@ -2,6 +2,7 @@
 
 <head>
 <script type='text/javascript' src="js/ClassObject.js"></script>
+<script type='text/javascript' src="js/LineObject.js"></script>
 <script type='text/javascript' src="js/mode/DefaultMode.js"></script>
 <script type='text/javascript' src="js/mode/SelectMode.js"></script>
 <script type='text/javascript' src="js/mode/AddClassMode.js"></script>
@@ -83,56 +84,83 @@ function NewCanvasNode(model)
     };
     return np;
 }
+function NewClassNode(model, _class)
+{
+    var class_node = View.ClassNode.Create(
+        _class.x, _class.y);
+    // Model notify View
+    _class.UIReflectors.Focus = function()
+    {
+        View.ClassNode.Focus(class_node);
+    };
+    _class.UIReflectors.UnFocus = function()
+    {
+        View.ClassNode.UnFocus(class_node);
+    };
+    _class.UIReflectors.ChangeXY = function(x, y)
+    {
+        View.ChangeObjectNodeXY(class_node, x, y);
+    };
+    // View notify Model
+    class_node.onmousedown = function(e)
+    {
+        model.MouseDownObject(_class, e.offsetX, e.offsetY);
+        e.stopPropagation();
+    };
+    class_node.onmouseup = function(e)
+    {
+        model.MouseUpObject(_class, e.offsetX, e.offsetY);
+        e.stopPropagation();
+    };
+    class_node.onmousemove = function(e)
+    {
+        model.MouseMoveCanvas(_class.x+e.offsetX, _class.y+e.offsetY);
+        e.stopPropagation();
+    };
+    return class_node;
+}
+function NewLineNode(model, line)
+{
+    var line_node = View.LineNode.Create(
+        line.endpoints[0][0],
+        line.endpoints[0][1],
+        line.endpoints[1][0],
+        line.endpoints[1][1]
+    );
+    // Model notify View
+    line.UIReflectors.ChangeXY = function(endpoints)
+    {
+        View.ChangeLineNodeXY(line_node, endpoints);
+    };
+    // View notify Model
+    line_node.onmousemove = function(e)
+    {
+        var ratio = e.offsetX/line.length(),
+            ep = line.endpoints;
+        model.MouseMoveCanvas(
+            ep[0][0]+(ep[1][0]-ep[0][0])*ratio,
+            ep[0][1]+(ep[1][1]-ep[0][1])*ratio
+        );
+        e.stopPropagation();
+    }
+    return line_node;
+}
 bdy.onload = function()
 {
     var model = new UMLEditorModel();
     var canvas = NewCanvasNode(model);
     model.Events.OnNewClass = function(_class)
     {
-        var class_node = View.ClassNode.Create(
-            _class.x, _class.y);
-        // Model notify View
-        _class.UIReflectors.Focus = function()
-        {
-            View.ClassNode.Focus(class_node);
-        };
-        _class.UIReflectors.UnFocus = function()
-        {
-            View.ClassNode.UnFocus(class_node);
-        };
-        _class.UIReflectors.ChangeXY = function(x, y)
-        {
-            View.ChangeObjectNodeXY(class_node, x, y);
-        };
-        // View notify Model
-        class_node.onmousedown = function(e)
-        {
-            model.MouseDownObject(_class, e.offsetX, e.offsetY);
-            e.stopPropagation();
-        };
-        class_node.onmouseup = function(e)
-        {
-            model.MouseUpObject(_class, e.offsetX, e.offsetY);
-            e.stopPropagation();
-        };
-        class_node.onmousemove = function(e)
-        {
-            model.MouseMoveObject(_class, e.offsetX, e.offsetY);
-            e.stopPropagation();
-        };
-        canvas.appendChild(class_node);
+        canvas.appendChild(NewClassNode(model, _class));
+    };
+    model.Events.OnNewLine = function(line)
+    {
+        canvas.appendChild(NewLineNode(model, line));
     };
     bdy.appendChild(NewSelectNode(model));
     bdy.appendChild(NewAddClassNode(model));
     bdy.appendChild(NewAddLineNode(model));
     bdy.appendChild(canvas);
-    /*
-    var test = View.ClassNode.Create(100, 100);
-    console.log(test);
-    canvas.appendChild(test);
-    View.ClassNode.Focus(test);
-    */
-
 };
 
 </script>

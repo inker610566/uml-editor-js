@@ -31,16 +31,6 @@ var SelectMode = function(model)
     {
         _draggingObject = null;
     };
-    this.MouseMoveObject = function(_class, x, y)
-    {
-        if(_draggingObject != null)
-        {
-            MoveDragObject(
-                x+_class.x+_dragStartDX,
-                y+_class.y+_dragStartDY
-            );
-        }
-    };
     this.MouseMoveCanvas = function(x, y)
     {
         if(_draggingObject != null)
