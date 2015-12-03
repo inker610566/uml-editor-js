@@ -5,6 +5,8 @@ var SelectMode = function(model)
         // relative to canvas
         _dragStartDX, _dragStartDY;
 
+    var _FocusObject = null;
+
     function MoveDragObject(toX, toY)
     {
         // assert(_draggingObject != null)
@@ -18,8 +20,10 @@ var SelectMode = function(model)
     // @param   which ClassModel is clicked
     this.MouseDownObject = function(_class, x, y)
     {
-        _class.UIReflectors.FocusIt();
-        _draggingObject = _class;
+        if(_FocusObject != null)
+            _FocusObject.UIReflectors.UnFocus();
+        _class.UIReflectors.Focus();
+        _FocusObject = _draggingObject = _class;
         _dragStartDX = -x;
         _dragStartDY = -y;
     };
@@ -56,5 +60,13 @@ var SelectMode = function(model)
     };
     this.MouseUpCanvas = function(x, y)
     {
+    };
+    this.EnterMode = function()
+    {
+    };
+    this.LeaveMode = function()
+    {
+        if(_FocusObject != null)
+            _FocusObject.UIReflectors.UnFocus();
     };
 };
