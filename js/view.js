@@ -1,4 +1,7 @@
 var View = {
+    // only need to track current max number
+    g_zIndex: 2, 
+    /*** Toolbox ***/
     CreateSelectNode: function(){
         var np = document.createElement('input');
         np.type = 'button';
@@ -36,6 +39,7 @@ var View = {
         button.style.fontWeight = 'normal';
         return button;
     },
+    /*** Object Node ***/
     CreateClassNode: function(x, y, z_index)
     {
         var div = document.createElement('div');
@@ -44,9 +48,19 @@ var View = {
         div.style.height = 50;
         div.style.border = "1px solid black";
         div.style.position = 'absolute';
-        div.style.zIndex = z_index||1;
+        div.style.zIndex = ++View.g_zIndex;
         div.style.left = x;
         div.style.top = y;
         return div;
+    },
+    FocusObjectNode: function(div)
+    {
+        div.style.zIndex = ++View.g_zIndex;
+    },
+    ChangeObjectNodeXY: function(div, x, y)
+    {
+        div.style.left = x;
+        div.style.top  = y;
     }
 };
+

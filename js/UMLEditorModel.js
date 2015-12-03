@@ -14,7 +14,8 @@ var UMLEditorModel = function()
         OnNewClass: do_nothing // (ClassModel, x, y)->()
     };
 
-    var _addClassMode = new AddClassMode(this);
+    var _addClassMode = new AddClassMode(this),
+        _selectMode = new SelectMode(this);
     var _currentMode = new DefaultMode(this);
 
     function ClickButton(id)
@@ -25,17 +26,21 @@ var UMLEditorModel = function()
         this.ButtonUpdaters[id](true);
     };
     // @param   which ClassModel is clicked
-    this.MouseDownClass = function(_class, x, y)
+    this.MouseDownObject = function(_class, x, y)
     {
-        _currentMode.MouseDownClass(_class, x, y);
+        _currentMode.MouseDownObject(_class, x, y);
     };
-    this.MouseUpClass = function(_class, x, y)
+    this.MouseUpObject = function(_class, x, y)
     {
-        _currentMode.MouseUpClass(_class, x, y);
+        _currentMode.MouseUpObject(_class, x, y);
     };
-    this.MouseMove = function(x, y)
+    this.MouseMoveObject = function(_class, x, y)
     {
-        _currentMode.MouseMove(x, y);
+        _currentMode.MouseMoveObject(_class, x, y);
+    };
+    this.MouseMoveCanvas = function(x, y)
+    {
+        _currentMode.MouseMoveCanvas(x, y);
     };
     this.MouseLeaveCanvas = function(x, y)
     {
@@ -62,6 +67,7 @@ var UMLEditorModel = function()
     this.ClickSelectButton = function()
     {
         ClickButton.call(this, "ChangeSelectButton");
+        _currentMode = _selectMode;
     };
     this.ClickAddClassButton = function()
     {
