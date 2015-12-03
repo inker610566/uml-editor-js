@@ -68,6 +68,14 @@ function NewCanvasNode(model)
     {
         model.MouseDownCanvas(e.offsetX, e.offsetY);
     };
+    np.onmouseup = function(e)
+    {
+        model.MouseUpCanvas(e.offsetX, e.offsetY);
+    };
+    np.onmousemove = function(e)
+    {
+        model.MouseMoveCanvas(e.offsetX, e.offsetY);
+    };
     return np;
 }
 bdy.onload = function()
@@ -86,12 +94,17 @@ bdy.onload = function()
         // View notify Model
         class_node.onmousedown = function(e)
         {
-            model.MouseDownClass(_class, e.offsetX, e.offsetY);
+            model.MouseDownObject(_class, e.offsetX, e.offsetY);
             e.stopPropagation();
         };
         class_node.onmouseup = function(e)
         {
-            model.MouseUpClass(_class, e.offsetX, e.offsetY);
+            model.MouseUpObject(_class, e.offsetX, e.offsetY);
+            e.stopPropagation();
+        };
+        class_node.onmousemove = function(e)
+        {
+            model.MouseMoveObject(_class, e.offsetX, e.offsetY);
             e.stopPropagation();
         };
         canvas.appendChild(class_node);

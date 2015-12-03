@@ -1,14 +1,18 @@
 var SelectMode = function(model)
 {
+    var _draggingObject = null;
     // @param   which ClassModel is clicked
-    this.MouseDownClass = function(_class, x, y)
+    this.MouseDownObject = function(_class, x, y)
     {
         _class.UIReflectors.FocusIt();
     };
-    this.MouseUpClass = function(_class, x, y)
+    this.MouseUpObject = function(_class, x, y)
     {
     };
-    this.MouseMove = function(x, y)
+    this.MouseMoveObject = function(_class, x, y)
+    {
+    };
+    this.MouseMoveCanvas = function(x, y)
     {
     };
     this.MouseLeaveCanvas = function(x, y)
