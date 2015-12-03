@@ -76,6 +76,10 @@ function NewCanvasNode(model)
     {
         model.MouseMoveCanvas(e.offsetX, e.offsetY);
     };
+    np.onmouseleave = function(e)
+    {
+        model.MouseLeaveCanvas(e.offsetX, e.offsetY);
+    };
     return np;
 }
 bdy.onload = function()
@@ -90,6 +94,10 @@ bdy.onload = function()
         _class.UIReflectors.FocusIt = function()
         {
             View.FocusObjectNode(class_node);
+        };
+        _class.UIReflectors.ChangeXY = function(x, y)
+        {
+            View.ChangeObjectNodeXY(class_node, x, y);
         };
         // View notify Model
         class_node.onmousedown = function(e)

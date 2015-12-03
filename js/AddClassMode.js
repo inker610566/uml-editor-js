@@ -21,9 +21,9 @@ var AddClassMode = function(model)
     };
     this.MouseDownCanvas = function(x, y)
     {
-        model.Events.OnNewClass(new ClassObject(x, y));
     };
     this.MouseUpCanvas = function(x, y)
     {
+        model.Events.OnNewClass(new ClassObject(x, y));
     };
 };
