@@ -136,6 +136,24 @@ var View = {
     {
         div.style.left = x;
         div.style.top  = y;
+    },
+    /*** Line Node ***/
+    CreateLineNode: function(x1, y1, x2, y2)
+    {
+        var div = document.createElement('div');
+        div.style.background = 'black';
+        var len = Math.hypot(x2-x1, y2-y1)
+        div.style.width  = len;
+        div.style.height = 2;
+        div.style.position = 'absolute';
+        div.style.left = x1;
+        div.style.top  = y1;
+        div.style.transformOrigin = '0 50%';
+        var deg = Math.acos((x2-x1)/len);
+        if(y2<y1) deg = -deg;
+        deg = deg*180/Math.PI;
+        div.style.transform = "rotate("+deg+"deg)";
+        return div;
     }
 };
 

@@ -15,8 +15,9 @@ var UMLEditorModel = function()
     };
 
     var _addClassMode = new AddClassMode(this),
-        _selectMode = new SelectMode(this);
-    var _currentMode = new DefaultMode(this);
+        _addLineMode  = new AddLineMode(this);
+        _selectMode   = new SelectMode(this);
+    var _currentMode  = new DefaultMode(this);
     // Mode
     function EnterMode(mode)
     {
@@ -87,5 +88,6 @@ var UMLEditorModel = function()
     this.ClickAddLineButton = function()
     {
         ClickButton.call(this, "ChangeAddLineButton");
+        EnterMode(_addLineMode);
     };
 };
