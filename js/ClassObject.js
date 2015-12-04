@@ -2,7 +2,7 @@ var ClassObject = function(sx, sy)
 {
     this.x = sx;
     this.y = sy;
-    var ports = [[], [], [], []];
+    this.ports = [[], [], [], []];
     var do_nothing = function(){};
     this.UIReflectors = {
         ChangeXY: do_nothing, // (x, y) -> ()
@@ -33,6 +33,6 @@ var ClassObject = function(sx, sy)
     }
     this.AddLineToPort = function(no, line)
     {
-        ports[no].push(line);
+        this.ports[no].push(line);
     }
 };
