@@ -3,7 +3,8 @@ var LineObject = function(sx1, sy1, sx2, sy2)
     this.endpoints = [[sx1, sy1], [sx2, sy2]];
     var do_nothing = function(){};
     this.UIReflectors = {
-        ChangeXY: do_nothing // (endpoints) -> ()
+        ChangeXY: do_nothing, // (endpoints) -> ()
+        Destroy: do_nothing // ()->()
     };
     this.length = function()
     {

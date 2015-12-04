@@ -132,6 +132,11 @@ function NewLineNode(model, line)
     {
         View.ChangeLineNodeXY(line_node, endpoints);
     };
+    line.UIReflectors.Destroy = function(endpoints)
+    {
+        line_node.remove();
+    };
+
     // View notify Model
     line_node.onmousemove = function(e)
     {

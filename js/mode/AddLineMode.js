@@ -38,8 +38,11 @@ var AddLineMode = function(model)
                 );
                 _startDragging = _draggingLine = null;
             }
-            else
-                ;// cancel
+            else if(_draggingLine != null)
+            {
+                _draggingLine.UIReflectors.Destroy();
+                _startDragging = _draggingLine = null;
+            }
         }
     };
     this.MouseMoveCanvas = function(x, y)
@@ -55,17 +58,32 @@ var AddLineMode = function(model)
     };
     this.MouseLeaveCanvas = function(x, y)
     {
+        if(_draggingLine != null)
+        {
+            _draggingLine.UIReflectors.Destroy();
+            _startDragging = _draggingLine = null;
+        }
     };
     this.MouseDownCanvas = function(x, y)
     {
     };
     this.MouseUpCanvas = function(x, y)
     {
+        if(_draggingLine != null)
+        {
+            _draggingLine.UIReflectors.Destroy();
+            _startDragging = _draggingLine = null;
+        }
     };
     this.EnterMode = function()
     {
     };
     this.LeaveMode = function()
     {
+        if(_draggingLine != null)
+        {
+            _draggingLine.UIReflectors.Destroy();
+            _startDragging = _draggingLine = null;
+        }
     };
 };
