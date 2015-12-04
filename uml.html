@@ -136,6 +136,10 @@ function NewLineNode(model, line)
     {
         line_node.remove();
     };
+    line.UIReflectors.Focus = function(endpoints)
+    {
+        View.FocusLineNode(line_node);
+    }
 
     // View notify Model
     line_node.onmousemove = function(e)

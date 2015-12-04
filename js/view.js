@@ -134,6 +134,10 @@ var View = {
             if(y2<y1) deg = -deg;
             div.style.transform = "rotate("+deg+"rad)";
             return div;
+        },
+        Focus: function(div)
+        {
+            View.FocusLineNode(div);
         }
     },
     CreatePortNode: function(x, y)
@@ -149,6 +153,10 @@ var View = {
         return div;
     },
     FocusObjectNode: function(div)
+    {
+        div.style.zIndex = ++View.g_zIndex;
+    },
+    FocusLineNode: function(div)
     {
         div.style.zIndex = ++View.g_zIndex;
     },
