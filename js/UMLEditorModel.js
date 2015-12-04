@@ -11,12 +11,14 @@ var UMLEditorModel = function()
     };
     // Register Event to catch model change
     this.Events = {
-        OnNewClass: do_nothing // (ClassModel, x, y)->()
+        OnNewClass: do_nothing, // (ClassObject)->()
+        OnNewLine:  do_nothing // (LineObject)->()
     };
 
     var _addClassMode = new AddClassMode(this),
-        _selectMode = new SelectMode(this);
-    var _currentMode = new DefaultMode(this);
+        _addLineMode  = new AddLineMode(this);
+        _selectMode   = new SelectMode(this);
+    var _currentMode  = new DefaultMode(this);
     // Mode
     function EnterMode(mode)
     {
@@ -43,10 +45,6 @@ var UMLEditorModel = function()
     this.MouseUpObject = function(_class, x, y)
     {
         _currentMode.MouseUpObject(_class, x, y);
-    };
-    this.MouseMoveObject = function(_class, x, y)
-    {
-        _currentMode.MouseMoveObject(_class, x, y);
     };
     this.MouseMoveCanvas = function(x, y)
     {
@@ -87,5 +85,6 @@ var UMLEditorModel = function()
     this.ClickAddLineButton = function()
     {
         ClickButton.call(this, "ChangeAddLineButton");
+        EnterMode(_addLineMode);
     };
 };

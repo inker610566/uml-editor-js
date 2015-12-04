@@ -7,9 +7,6 @@ var DefaultMode = function()
     this.MouseUpObject = function(_class, x, y)
     {
     };
-    this.MouseMoveObject = function(_class, x, y)
-    {
-    };
     this.MouseMoveCanvas = function(x, y)
     {
     };

@@ -10,9 +10,6 @@ var AddClassMode = function(model)
         y += _class.y;
         model.Events.OnNewClass(new ClassObject(x, y));
     };
-    this.MouseMoveObject = function(_class, x, y)
-    {
-    };
     this.MouseMoveCanvas = function(x, y)
     {
     };

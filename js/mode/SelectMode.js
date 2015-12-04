@@ -16,6 +16,26 @@ var SelectMode = function(model)
             _draggingObject.x,
             _draggingObject.y
         );
+        // focus lines
+        for(var i = 0 ; i < 4 ; i ++)
+        {
+            var ploc = _draggingObject.PortLoc(i);
+            for(var j = 0, ps = _draggingObject.ports[i];
+                    j < ps.length ; j ++)
+            {
+                if(ps[j].epObject[0] == _draggingObject)
+                {
+                    ps[j].endpoints[0][0] = ploc[0];
+                    ps[j].endpoints[0][1] = ploc[1];
+                }
+                else
+                {
+                    ps[j].endpoints[1][0] = ploc[0];
+                    ps[j].endpoints[1][1] = ploc[1];
+                }
+                ps[j].UIReflectors.ChangeXY(ps[j].endpoints);
+            }
+        }
     }
     // @param   which ClassModel is clicked
     this.MouseDownObject = function(_class, x, y)
@@ -26,20 +46,15 @@ var SelectMode = function(model)
         _FocusObject = _draggingObject = _class;
         _dragStartDX = -x;
         _dragStartDY = -y;
+        // focus all lines
+        for(var i = 0 ; i < 4 ; i ++)
+            for(var j = 0, ps = _class.ports[i];
+                    j < ps.length ; j ++)
+                ps[j].UIReflectors.Focus();
     };
     this.MouseUpObject = function(_class, x, y)
     {
         _draggingObject = null;
-    };
-    this.MouseMoveObject = function(_class, x, y)
-    {
-        if(_draggingObject != null)
-        {
-            MoveDragObject(
-                x+_class.x+_dragStartDX,
-                y+_class.y+_dragStartDY
-            );
-        }
     };
     this.MouseMoveCanvas = function(x, y)
     {
